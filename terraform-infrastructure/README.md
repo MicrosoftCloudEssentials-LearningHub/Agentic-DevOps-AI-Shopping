@@ -107,58 +107,55 @@ graph TD;
 !!! warning "Important"
     Please modify `terraform.tfvars` with your information, then run the following flow. If you need more visual guidance, please check the video that illustrates the provisioning steps.
 
-1. **Login to Azure**: This command logs you into your Azure account. It opens a browser window where you can enter your Azure credentials. Once logged in, you can manage your Azure resources from the command line.
+### 1. Sign in to Azure
 
-    > Go to the path where Terraform files are located:
+Open a browser sign-in flow for the Azure account that will deploy the resources.
 
-    ```sh
-    cd terraform-infrastructure
-    ```
+```sh
+cd terraform-infrastructure
+az login
+```
 
-    ```sh
-    az login
-    ```
+<img width="550" alt="Azure sign-in flow" src="https://github.com/user-attachments/assets/53b47aa7-134e-4cf7-b0b8-cdebdd0583ed" />
 
-    <img width="550" alt="img" src="https://github.com/user-attachments/assets/53b47aa7-134e-4cf7-b0b8-cdebdd0583ed" />
+<img width="550" alt="Azure CLI authenticated" src="https://github.com/user-attachments/assets/1d9a247d-3dc9-472f-9305-4e4f0ecb72f1" />
 
-    <img width="550" alt="img" src="https://github.com/user-attachments/assets/1d9a247d-3dc9-472f-9305-4e4f0ecb72f1" />
+### 2. Initialize Terraform
 
-2. **Initialize Terraform**: Initializes the working directory containing the Terraform configuration files. It downloads the necessary provider plugins and sets up the backend for storing the state.
+Initialize the working directory and download the required provider plugins.
 
-    ``` sh
-    terraform init
-    ```
+```sh
+terraform init
+```
 
-   <img width="550" alt="img" src="https://github.com/user-attachments/assets/a7a32891-ad72-423a-a1fe-bdb50925b546" />
+<img width="550" alt="Terraform initialization completed" src="https://github.com/user-attachments/assets/a7a32891-ad72-423a-a1fe-bdb50925b546" />
 
-3. **Terraform Provisioning Stage**:
+### 3. Review the plan
 
-   - **Review**: Creates an execution plan, showing what actions Terraform will take to achieve the desired state defined in your configuration files. It uses the variable values specified in `terraform.tfvars`.
+Create an execution plan to review the resources Terraform will create or update using the values in `terraform.tfvars`.
 
-        ```sh
-        terraform plan -var-file terraform.tfvars
-        ```
+```sh
+terraform plan -var-file terraform.tfvars
+```
 
-        > At the end, you will see a message in green if everything was executed successfully:
+<img width="550" alt="Terraform plan completed" src="https://github.com/user-attachments/assets/4741e863-1ccd-4f2a-a0b8-d5d1964bd890" />
 
-        <img width="550" alt="Screenshot 2025-03-18 145143" src="https://github.com/user-attachments/assets/4741e863-1ccd-4f2a-a0b8-d5d1964bd890" />
+### 4. Apply the configuration
 
-   - **Order Now**: Applies the changes required to reach the desired state of the configuration. It prompts for confirmation before making any changes. It also uses the variable values specified in `terraform.tfvars`.
+Apply the reviewed configuration. Terraform prompts for confirmation before making changes.
 
-        ```sh
-        terraform apply -var-file terraform.tfvars
-        ```
+```sh
+terraform apply -var-file terraform.tfvars
+```
 
-        > At the end, you will see a message in green if everything was executed successfully:
+<img width="550" alt="Terraform apply completed" src="https://github.com/user-attachments/assets/2b32b63f-3e9f-46da-a5e9-c39360135251" />
 
-        <img width="550" alt="image" src="https://github.com/user-attachments/assets/2b32b63f-3e9f-46da-a5e9-c39360135251">
+### 5. Remove resources when finished
 
-   - **Remove**: Destroys the infrastructure managed by Terraform. It prompts for confirmation before deleting any resources. It also uses the variable values specified in `terraform.tfvars`.
+Destroy the resources managed by this Terraform configuration when the demo environment is no longer needed.
 
-        ```sh
-        terraform destroy -var-file terraform.tfvars
-        ```
+```sh
+terraform destroy -var-file terraform.tfvars
+```
 
-        > At the end, you will see a message in green if everything was executed successfully:
-
-        <img width="550" alt="image" src="https://github.com/user-attachments/assets/f2089d03-3a3d-431d-b462-8148ef519104">
+<img width="550" alt="Terraform destroy completed" src="https://github.com/user-attachments/assets/f2089d03-3a3d-431d-b462-8148ef519104" />
