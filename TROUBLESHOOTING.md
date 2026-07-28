@@ -1,17 +1,8 @@
 # Troubleshooting Guide - Overview
 
-Costa Rica
-
-[![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/)
-[Cloud2BR OSS - Learning Hub](https://github.com/Cloud2BR-MSFTLearningHub)
-
-Last updated: 2026-04-06
-
-----------
-
 > This guide covers common issues you may encounter when deploying and running this Azure AI Shopping demo application.
 
-<details>
+<details markdown="1">
 <summary><b>Table of Content</b> (Click to expand)</summary>
 
 - [Python Not Found](#python-not-found)
@@ -42,7 +33,7 @@ Last updated: 2026-04-06
 ERROR: Python is not installed or not in PATH
 ```
 
-**Solution**: 
+**Solution**:
 
 - Install Python 3.8+ from <https://www.python.org/downloads/>
 - Ensure Python is added to your system PATH during installation
@@ -54,7 +45,7 @@ ERROR: Python is not installed or not in PATH
 ERROR: Failed to create virtual environment
 ```
 
-**Solution**: 
+**Solution**:
 
 - Ensure you have write permissions to the `src` directory
 - Try deleting existing `venv` folder: `Remove-Item -Recurse -Force venv`
@@ -233,7 +224,7 @@ terraform apply -auto-approve
 ERROR: Failed to authenticate to Cosmos DB using DefaultAzureCredential and no valid COSMOS_DB_KEY was provided
 ```
 
-**Solution**: 
+**Solution**:
 
 - Ensure your `.env` file is properly generated with correct keys
 - Run `terraform apply` again if needed
@@ -350,10 +341,3 @@ terraform apply
 3. Enable detailed logging as described above
 4. Collect error messages, logs, and configuration details
 5. Create a new issue with detailed information about your problem
-
-<!-- START BADGE -->
-<div align="center">
-  <img src="https://img.shields.io/badge/Total%20views-1321-limegreen" alt="Total views">
-  <p>Refresh Date: 2026-04-06</p>
-</div>
-<!-- END BADGE -->

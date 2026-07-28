@@ -1,29 +1,20 @@
-# Demo: Zava AI Shopping Assistant <br/> Multi-Agent Architecture with A2A Protocol - Overview 
+# Demo: Zava AI Shopping Assistant <br/> Multi-Agent Architecture with A2A Protocol - Overview
 
-Costa Rica
+!!! warning "Important"
+    Disclaimer: This repository contains a demo of `Zava AI Shopping Assistant`, a multi-agent system implementing Agent-to-Agent (A2A) protocol for e-commerce. It features a fully automated `"Zero-Touch" deployment` pipeline orchestrated by Terraform, which `provisions infrastructure, ingests data, creates specialized AI agents with delegation patterns in MSFT Foundry, and deploys the complete A2A application stack.` Feel free to modify this as needed, it's just a reference. Please refer [TechWorkshop L300: AI Apps and Agents](https://microsoft.github.io/TechWorkshop-L300-AI-Apps-and-agents/), and if needed contact Microsoft directly: [Microsoft Sales and Support](https://support.microsoft.com/contactus?ContactUsExperienceEntryPointAssetId=S.HP.SMC-HOME) for more guidance. There are tons of free resources out there, all eager to support!
 
-[![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/)
-[Cloud2BR OSS - Learning Hub](https://github.com/Cloud2BR-MSFTLearningHub)
-
-Last updated: 2026-04-06
-
-----------
-
-> [!IMPORTANT]
-> Disclaimer: This repository contains a demo of `Zava AI Shopping Assistant`, a multi-agent system implementing Agent-to-Agent (A2A) protocol for e-commerce. It features a fully automated `"Zero-Touch" deployment` pipeline orchestrated by Terraform, which `provisions infrastructure, ingests data, creates specialized AI agents with delegation patterns in MSFT Foundry, and deploys the complete A2A application stack.` Feel free to modify this as needed, it's just a reference. Please refer [TechWorkshop L300: AI Apps and Agents](https://microsoft.github.io/TechWorkshop-L300-AI-Apps-and-agents/), and if needed contact Microsoft directly: [Microsoft Sales and Support](https://support.microsoft.com/contactus?ContactUsExperienceEntryPointAssetId=S.HP.SMC-HOME) for more guidance. There are tons of free resources out there, all eager to support! 
-
-<details>
+<details markdown="1">
 <summary><b>List of References</b> (Click to expand)</summary>
-  
+
 - [Microsoft Foundry SDKs and Endpoints](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/develop/sdk-overview?view=foundry&pivots=programming-language-python)
 - Microsoft Defender for Cloud (DevOps security):
   - [Connect GitHub to Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/quickstart-onboard-github)
   - [Connect Azure DevOps to Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/quickstart-onboard-devops)
   - [DevOps security permissions and prerequisites](https://learn.microsoft.com/azure/defender-for-cloud/devops-support)
-  
+
 </details>
 
-<details>
+<details markdown="1">
 <summary><b>Table of Content</b> (Click to expand)</summary>
 
 - [Prerequisites](#prerequisites)
@@ -35,7 +26,7 @@ Last updated: 2026-04-06
 - [Architecture](#architecture)
 - [What Happens Under the Hood](#what-happens-under-the-hood)
 - [Verification](#verification)
-  
+
 </details>
 
 > E.g Web App approach:
@@ -43,14 +34,14 @@ Last updated: 2026-04-06
 <div align="center">
   <img width="950" alt="image" src="https://github.com/user-attachments/assets/886cca9f-9630-4d5f-aca1-b4d37a42fa2d" style="border: 2px solid #4CAF50; border-radius: 5px; padding: 5px;"/>
 </div>
-  
-> [!IMPORTANT]
-> The deployment process typically takes 15-20 minutes
->
-> 1. Pick a deployment approach (Container Apps or App Service)
-> 2. Adjust [terraform.tfvars](./terraform-infrastructure/terraform.tfvars) values
-> 2. Initialize terraform with `terraform init`. Click here to [understand more about the deployment process](./terraform-infrastructure/README.md)
-> 3. Run `terraform apply`, you can also leverage `terraform apply -auto-approve`. 
+
+!!! warning "Important"
+    The deployment process typically takes 15-20 minutes
+
+    1. Pick a deployment approach (Container Apps or App Service)
+    2. Adjust [terraform.tfvars](https://github.com/Cloud2BR-MSFTLearningHub/Agentic-DevOps-AI-Shopping/blob/main/terraform-infrastructure/terraform.tfvars) values
+    2. Initialize terraform with `terraform init`. Click here to [understand more about the deployment process](./terraform-infrastructure/README.md)
+    3. Run `terraform apply`, you can also leverage `terraform apply -auto-approve`.
 
 ## Prerequisites
 
@@ -68,7 +59,7 @@ Last updated: 2026-04-06
 2. **Settings** -> Resource providers
 3. Search each provider below and click **Register** if the status is not already **Registered**
 
-<details>
+<details markdown="1">
 <summary><b>Resource providers </b> (Click to expand)</summary>
 
 | Resource provider namespace | Required for this IaC | Notes |
@@ -91,17 +82,17 @@ Last updated: 2026-04-06
 
 </details>
 
-> [!TIP]
-> CLI alternative (register all required providers):
->
-> ```sh
-> for ns in Microsoft.Resources Microsoft.Authorization Microsoft.Storage Microsoft.CognitiveServices Microsoft.DocumentDB Microsoft.Search Microsoft.KeyVault Microsoft.ContainerRegistry Microsoft.ManagedIdentity Microsoft.App Microsoft.Web Microsoft.OperationalInsights Microsoft.Insights Microsoft.Portal; do
->   az provider register --namespace "$ns" --wait
-> done
->
-> # Only if you enable Defender options in terraform.tfvars:
-> az provider register --namespace Microsoft.Security --wait
-> ```
+!!! tip
+    CLI alternative (register all required providers):
+
+    ```sh
+    for ns in Microsoft.Resources Microsoft.Authorization Microsoft.Storage Microsoft.CognitiveServices Microsoft.DocumentDB Microsoft.Search Microsoft.KeyVault Microsoft.ContainerRegistry Microsoft.ManagedIdentity Microsoft.App Microsoft.Web Microsoft.OperationalInsights Microsoft.Insights Microsoft.Portal; do
+      az provider register --namespace "$ns" --wait
+    done
+
+    # Only if you enable Defender options in terraform.tfvars:
+    az provider register --namespace Microsoft.Security --wait
+    ```
 
 ## Deployment Approaches (pick one)
 
@@ -112,7 +103,7 @@ Last updated: 2026-04-06
 - **App Service (Linux custom container)**
   - In `terraform-infrastructure/terraform.tfvars`: set `deployment_target = "appservice"` and choose `app_service_sku` (e.g. `P0v3`)
   - Run: `cd terraform-infrastructure` then `terraform apply -var-file terraform.tfvars`
-   
+
 ## Key Features
 
 - **Multi-agent chat orchestration (default runtime)**: WebSocket `/ws` chat app orchestrates multiple agents in a single conversation flow (routing + multi-step handoffs)
@@ -130,24 +121,24 @@ Last updated: 2026-04-06
 - **UI-visible diagnostics**: Correlated `error_id` responses and optional tracebacks via `A2A_DEBUG=true` for faster troubleshooting
 - **Optional A2A server included**: `src/a2a/` contains an A2A-style server framework, but it is not the default Container Apps entrypoint unless you deploy it explicitly
 
-> [!NOTE]
-> Visibility-first rollout (recommended for demos):
->
-> - Onboard **GitHub connector only** first to validate the Defender dashboards/workbooks.
-> - Onboard **Azure DevOps connector** only in a **sandbox org/project**.
-> - Keep **PR annotations OFF** initially (no write-back to PRs) until you decide to enable them.
+!!! note
+    Visibility-first rollout (recommended for demos):
+
+    - Onboard **GitHub connector only** first to validate the Defender dashboards/workbooks.
+    - Onboard **Azure DevOps connector** only in a **sandbox org/project**.
+    - Keep **PR annotations OFF** initially (no write-back to PRs) until you decide to enable them.
 
 ## More Security with Microsoft Defender
 
-> [!IMPORTANT]
-> **Defender is enabled by default in this repo's Terraform defaults.** This can incur Azure costs (Defender plans) and will provision DevOps security connector resources that still require a one-time interactive authorization step for GitHub/Azure DevOps.
-> To opt out, explicitly set the related variables to `false` in [terraform-infrastructure/terraform.tfvars](terraform-infrastructure/terraform.tfvars).
+!!! warning "Important"
+    **Defender is enabled by default in this repo's Terraform defaults.** This can incur Azure costs (Defender plans) and will provision DevOps security connector resources that still require a one-time interactive authorization step for GitHub/Azure DevOps.
+    To opt out, explicitly set the related variables to `false` in [terraform-infrastructure/terraform.tfvars](https://github.com/Cloud2BR-MSFTLearningHub/Agentic-DevOps-AI-Shopping/blob/main/terraform-infrastructure/terraform.tfvars).
 
 This repo supports two complementary “Defender” scenarios:
 
 1. **Microsoft Defender for Cloud (workload protection / cloud posture)**
    - This repo includes an opt-in Terraform configuration to enable Defender for Cloud plans at the subscription scope.
-   - Toggle via `enable_defender_for_cloud` in [terraform-infrastructure/terraform.tfvars](terraform-infrastructure/terraform.tfvars) (or the example `tfvars` files above).
+  - Toggle via `enable_defender_for_cloud` in [terraform-infrastructure/terraform.tfvars](https://github.com/Cloud2BR-MSFTLearningHub/Agentic-DevOps-AI-Shopping/blob/main/terraform-infrastructure/terraform.tfvars) (or the example `tfvars` files above).
    - Note: enabling Defender plans can incur Azure costs.
 
 2. **Defender for Cloud DevOps Security (GHAS / ADO aggregation & reporting)**
@@ -155,11 +146,11 @@ This repo supports two complementary “Defender” scenarios:
    - This is the feature area that provides the “central dashboard” experience for GHAS-like findings (code scanning, dependency, secrets) across **organizations/projects** (not just individual repos).
    - It can optionally add **Pull Request annotations** (a write-back action) but only when you explicitly enable/configure that feature.
 
-> [!NOTE]
-> Opt out (disable Defender): In [terraform-infrastructure/terraform.tfvars](terraform-infrastructure/terraform.tfvars), set:
->
-> - `enable_defender_for_cloud = false`
-> - `enable_defender_devops_security = false`
+!!! note
+    Opt out (disable Defender): In [terraform-infrastructure/terraform.tfvars](https://github.com/Cloud2BR-MSFTLearningHub/Agentic-DevOps-AI-Shopping/blob/main/terraform-infrastructure/terraform.tfvars), set:
+
+    - `enable_defender_for_cloud = false`
+    - `enable_defender_devops_security = false`
 
 ### If the Azure portal blade errors
 
@@ -208,11 +199,11 @@ This repo supports two complementary “Defender” scenarios:
 - **Agent implementations (examples)**: `src/app/agents/`
 - **Product catalog helper/plugin (if used)**: `src/app/agents/product_information_plugin.py`
 
-> [!IMPORTANT]
-> A2A vs the default deployed chat runtime:
->
-> - **A2A server path**: event/task oriented framework under `src/a2a/` (only available if you deploy/run that server)
-> - **Default path**: `/ws` WebSocket chat + routing + sequential handoffs to real Foundry agents (no event queue required for the default flow)
+!!! warning "Important"
+    A2A vs the default deployed chat runtime:
+
+    - **A2A server path**: event/task oriented framework under `src/a2a/` (only available if you deploy/run that server)
+    - **Default path**: `/ws` WebSocket chat + routing + sequential handoffs to real Foundry agents (no event queue required for the default flow)
 
 ## Architecture
 
@@ -223,7 +214,7 @@ graph TD
     App <--> A2A[A2A Protocol Server]
     A2A <--> EventQueue[Event Queue]
     A2A <--> Coordinator[A2A Coordinator]
-    
+
     Coordinator -->|A2A Protocol| Router{Agent Router}
     Router -->|Task Delegation| Cora[Cora Agent]
     Router -->|Design Tasks| Design[Interior Design Agent]
@@ -231,11 +222,11 @@ graph TD
     Router -->|Loyalty Tasks| Loyalty[Loyalty Agent]
     Router -->|Cart Events| Cart[Cart Agent]
     Router -->|Product Tasks| ProductMgr[Product Manager]
-    
+
     ProductMgr -->|Marketing Tasks| Marketing[Marketing Agent]
     ProductMgr -->|Ranking Tasks| Ranker[Ranker Agent]
     ProductMgr -->|Factual Data| Plugin[Product Info Plugin]
-    
+
     subgraph "A2A Communication"
         EventQueue <--> Cora
         EventQueue <--> Design
@@ -246,7 +237,7 @@ graph TD
         EventQueue <--> Marketing
         EventQueue <--> Ranker
     end
-    
+
     Inventory -->|Query| Search[Azure AI Search]
     Inventory -->|Lookup| Cosmos[Cosmos DB]
     Plugin -->|Catalog| PredefinedData[Product Catalog Data]
@@ -262,7 +253,7 @@ graph TD
    - Sets up monitoring (Log Analytics + Application Insights). Optional A2A components (like an in-memory event queue) are part of the app codebase, not separate Azure resources.
 
       > E.g Web App approach:
-      
+
        <img width="1859" height="900" alt="image" src="https://github.com/user-attachments/assets/cd24ab7f-5ddd-46de-b266-0d0a24c45803" />
 
 2. **A2A Framework Deployment**:
@@ -273,14 +264,14 @@ graph TD
    - Sets up a Python virtual environment.
    - Ingests `src/data/updated_product_catalog(in).csv` into Cosmos DB.
 
-        > E.g Web App approach: 
+        > E.g Web App approach:
 
         <https://github.com/user-attachments/assets/41bf0976-0ca8-47fe-a2fa-8750bcc6f848>
-   
+
    - Creates and populates an Azure AI Search index with vector embeddings.
 
         > E.g Web App approach:
-        
+
         <https://github.com/user-attachments/assets/37c4a8cd-73e1-4392-8755-fb018481d8cb>
 
 4. **Enhanced Agent Creation & A2A Registration**:
@@ -295,7 +286,7 @@ graph TD
    - Saves the unique runtime Agent IDs (OpenAI-style `asst_*`), endpoints, and configuration to the `.env` file.
 
       > E.g `Web App approach`
-      
+
       <img width="1881" height="1000" alt="image" src="https://github.com/user-attachments/assets/59a9dcaf-9291-403c-b8b0-1195c1375aac" />
 
       > E.g `New Platform`:
@@ -317,7 +308,7 @@ graph TD
    - You should see the Zava chat interface with multi-agent routing enabled.
 
       > E.g `Web App approach`
-      
+
        <https://github.com/user-attachments/assets/a1139528-6b37-4ac2-a1cb-771788ff45a4>
 
 2. **Verify A2A Protocol Endpoints**:
@@ -337,21 +328,14 @@ graph TD
      - Product Management Specialist with delegation capabilities
 
       > E.g `Web App approach`
-      
+
       <https://github.com/user-attachments/assets/3c562ccd-cff3-4a30-b9f8-44111fb71113>
 
 4. **Test Multi-Agent Routing (UI)**: `Adjust as needed, this is just a base`. For example:
 
-      | Prompt | E.g Output | 
+      | Prompt | E.g Output |
       | --- | --- |
-      | **General**: <br/> “Hi, who are you?” <br/> (Routed to **Cora**) | <img width="1142" height="950" alt="image" src="https://github.com/user-attachments/assets/72a60b47-dbd6-48b8-bff6-48ebd92fff48" /> | 
-      | **Design**: <br/>  “Recommend modern furniture for my living room” <br/> (Routed to **Interior Design Specialist**) | <img width="1167" height="963" alt="image" src="https://github.com/user-attachments/assets/5e602f08-06ca-4866-9892-ade211a3a413" /> | 
-      | **Product Comparisons**: <br/>  “Compare sectional sofas” <br/> (Routed to **Product Management Specialist**; comparison is handled within that agent) | <img width="1208" height="836" alt="image" src="https://github.com/user-attachments/assets/0649f459-e8d5-4916-a442-4cbec9b85fa6" /> | 
-      | **Loyalty Details**: <br/> “Give me a summary of my loyalty account benefits” <br/> (Routed to **Customer Loyalty**) | <img width="1211" height="955" alt="image" src="https://github.com/user-attachments/assets/45dec561-4f9a-433e-a264-09af2bff4453" /> | 
-            
-<!-- START BADGE -->
-<div align="center">
-  <img src="https://img.shields.io/badge/Total%20views-1321-limegreen" alt="Total views">
-  <p>Refresh Date: 2026-04-06</p>
-</div>
-<!-- END BADGE -->
+      | **General**: <br/> “Hi, who are you?” <br/> (Routed to **Cora**) | <img width="1142" height="950" alt="image" src="https://github.com/user-attachments/assets/72a60b47-dbd6-48b8-bff6-48ebd92fff48" /> |
+      | **Design**: <br/>  “Recommend modern furniture for my living room” <br/> (Routed to **Interior Design Specialist**) | <img width="1167" height="963" alt="image" src="https://github.com/user-attachments/assets/5e602f08-06ca-4866-9892-ade211a3a413" /> |
+      | **Product Comparisons**: <br/>  “Compare sectional sofas” <br/> (Routed to **Product Management Specialist**; comparison is handled within that agent) | <img width="1208" height="836" alt="image" src="https://github.com/user-attachments/assets/0649f459-e8d5-4916-a442-4cbec9b85fa6" /> |
+      | **Loyalty Details**: <br/> “Give me a summary of my loyalty account benefits” <br/> (Routed to **Customer Loyalty**) | <img width="1211" height="955" alt="image" src="https://github.com/user-attachments/assets/45dec561-4f9a-433e-a264-09af2bff4453" /> |
